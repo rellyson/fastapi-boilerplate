@@ -1,4 +1,6 @@
+from app.core.http.errors import BaseHTTPError
 from app.core.http.handlers.exception_handlers import (
+    default_http_error_handler,
     internal_server_exception_handler,
     not_found_exception_handler,
 )
@@ -16,7 +18,8 @@ You can find more info about FastAPI at the
     "docs_url": "/docs",
     "redoc_url": None,
     "exception_handlers": {
-        STATUS_NOT_FOUND.code(): not_found_exception_handler,
+        BaseHTTPError: default_http_error_handler,
         STATUS_INTERNAL_SERVER_ERROR.code(): internal_server_exception_handler,
+        STATUS_NOT_FOUND.code(): not_found_exception_handler,
     },
 }

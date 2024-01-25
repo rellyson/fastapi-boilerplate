@@ -3,7 +3,17 @@ from datetime import datetime
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
-from app.core.http.errors import HTTPInternalServerError, HTTPNotFoundError
+from app.core.http.errors import (
+    BaseHTTPError,
+    HTTPInternalServerError,
+    HTTPNotFoundError,
+)
+
+
+def default_http_error_handler(req: Request, exc: BaseHTTPError):
+    "Handles raised BaseHTTPError and returns a HTTP Error"
+
+    return JSONResponse(exc.to_json(), exc.status_code)
 
 
 def not_found_exception_handler(req: Request, exc: Exception):
